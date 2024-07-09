@@ -47,4 +47,10 @@ public class Trip {
         this.ownerEmail = payload.ownerEmail();
         this.isConfirmed = false;
     }
+
+    public void updateTrip(TripPayloadRequest payload){
+        this.destination = payload.destination();
+        this.startsAt = LocalDateTime.parse(payload.startsAt(), DateTimeFormatter.ISO_DATE_TIME);
+        this.endsAt = LocalDateTime.parse(payload.endsAt(), DateTimeFormatter.ISO_DATE_TIME);
+    }
 }

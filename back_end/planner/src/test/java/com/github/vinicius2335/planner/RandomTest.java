@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-class RandonTest {
+class RandomTest {
 
     @Test
     void generate_LocalDateTime(){
