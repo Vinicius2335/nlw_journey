@@ -13,17 +13,23 @@ import java.util.UUID;
 public class ParticipantController {
     private final ParticipantRepository participantRepository;
 
+    /**
+     * Endpoint responsável por confirmar o participante para a viagem
+     * @param participantId identificador do participante
+     * @param request objeto que apresenta os dados necessários para confirmar viagem
+     * @return {@code Participant} confirmado
+     */
     @PostMapping("/{participantId}/confirm")
     public ResponseEntity<Participant> confirmParticipant(
             @PathVariable UUID participantId,
-            @RequestBody ParticipantPayloadRequest payload
+            @RequestBody ParticipantCreateRequest request
     ){
         Optional<Participant> optParticipant = participantRepository.findById(participantId);
 
         if (optParticipant.isPresent()){
             Participant participant = optParticipant.get();
             participant.setConfirmed(true);
-            participant.setName(payload.name());
+            participant.setName(request.name());
 
             participantRepository.save(participant);
 

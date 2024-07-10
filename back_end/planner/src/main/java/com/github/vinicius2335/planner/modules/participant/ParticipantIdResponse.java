@@ -2,7 +2,7 @@ package com.github.vinicius2335.planner.modules.participant;
 
 import java.util.UUID;
 
-public record ParticipantCreateResponse(
+public record ParticipantIdResponse(
         UUID participantId
 ) {
 }

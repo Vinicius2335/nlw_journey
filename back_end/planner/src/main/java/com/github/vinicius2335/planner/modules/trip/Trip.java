@@ -39,7 +39,7 @@ public class Trip {
     @Column(name = "owner_email", nullable = false)
     private String ownerEmail;
 
-    public Trip(TripPayloadRequest payload){
+    public Trip(TripCreateRequest payload){
         this.destination = payload.destination();
         this.startsAt = LocalDateTime.parse(payload.startsAt(), DateTimeFormatter.ISO_DATE_TIME);
         this.endsAt = LocalDateTime.parse(payload.endsAt(), DateTimeFormatter.ISO_DATE_TIME);
@@ -48,7 +48,7 @@ public class Trip {
         this.isConfirmed = false;
     }
 
-    public void updateTrip(TripPayloadRequest payload){
+    public void updateTrip(TripCreateRequest payload){
         this.destination = payload.destination();
         this.startsAt = LocalDateTime.parse(payload.startsAt(), DateTimeFormatter.ISO_DATE_TIME);
         this.endsAt = LocalDateTime.parse(payload.endsAt(), DateTimeFormatter.ISO_DATE_TIME);
