@@ -2,7 +2,7 @@ import { CheckCircle2, CircleDashed } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { api } from "../../lib/axios"
-import { Participant, ParticipantListResponse } from "../../model/ParticipantListResponse"
+import { Participant, ParticipantListResponse } from "../../model/Participant"
 
 /**
  * Componente de visualização dos convidados para a viagem, mostrando se eles confirmaram ou não

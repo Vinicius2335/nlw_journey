@@ -2,11 +2,11 @@ import { FormEvent, useState } from "react"
 import { DateRange } from "react-day-picker"
 import { useNavigate } from "react-router-dom"
 import { api } from "../../lib/axios"
-import { TripRequest } from "../../model/TripRequest"
 import { ConfirmTripModal } from "./confirm-trip-modal"
 import { InviteGuestsModal } from "./invite-guests-modal"
 import { DestinationAndDateStep } from "./steps/destination-and-date-step"
 import { InviteGuestsStep } from "./steps/invite-guests-step"
+import { TripRequest } from "../../model/Trip"
 
 // name export -> evita importações com nomes errados
 export function CreateTripPage() {

@@ -3,7 +3,7 @@ import { Button } from "../../components/button"
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { api } from "../../lib/axios"
-import { Activity, ActivityListResponse } from "../../model/ActivityListResponse"
+import { Activity, ActivityListResponse } from "../../model/Activity"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 

@@ -3,9 +3,7 @@ import { Button } from "../../components/button"
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { api } from "../../lib/axios"
-import { Link, LinkListResponse } from "../../model/LinkListResponse"
-
-// NOTE - FALTOU O HREF
+import { Link, LinkListResponse } from "../../model/Link"
 
 /**
  * Componente de visualização e adição de links importantes para a viagem
