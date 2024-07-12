@@ -5,8 +5,10 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -31,6 +33,7 @@ public class ActivityService {
 
     /**
      * Retorna todas as atividades relacionadas a uma viagem
+     *
      * @param tripId identificador da viagem
      * @return {@code ActivityListResponse} objeto que representa uma lista com os detalhes de cada atividade encontrada
      */
@@ -42,16 +45,18 @@ public class ActivityService {
 
         List<ActivitiesDTO> activities = new ArrayList<>();
 
-        for (Activity activity : activityList){
+        for (Activity activity : activityList) {
 
             boolean hasDateActivityRegistered = activities.stream()
-                    .anyMatch(activitiesDTO -> activitiesDTO.getDate().equals(activity.getOccursAt()));
+                    .anyMatch(activitiesDTO -> activitiesDTO.getDate().getDayOfYear() == activity.getOccursAt().getDayOfYear());
 
-            if (!hasDateActivityRegistered){
+            if (!hasDateActivityRegistered) {
                 ActivitiesDTO activitiesDTO = new ActivitiesDTO(activity.getOccursAt(), new ArrayList<>());
 
-                for (Activity compareActivity : activityList){
-                    if (activity.getOccursAt().equals(compareActivity.getOccursAt())){
+                for (Activity compareActivity : activityList) {
+                    if (
+                            activity.getOccursAt().getDayOfYear() == compareActivity.getOccursAt().getDayOfYear()
+                    ) {
                         activitiesDTO.getActivities().add(
                                 new ActivityDetailsDTO(
                                         compareActivity.getId(),
