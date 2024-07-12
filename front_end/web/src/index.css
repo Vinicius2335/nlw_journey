@@ -4,4 +4,8 @@
 
 *{
   min-width: 0;
+
+  --rdp-background-color: #84cc16;
+  --rdp-background-color-dark: #84cc16;
 }
+

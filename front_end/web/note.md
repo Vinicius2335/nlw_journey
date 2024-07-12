@@ -6,6 +6,7 @@
   - ``npm install react-router-dom``
   - ``npm install localforage match-sorter sort-by``
 - [Tailwind Variants](https://www.tailwind-variants.org/docs/introduction)
+- [React DayPicker](https://daypicker.dev)
 
 ## Não Esquecer
 - ctrl + shift + p => restart ts server (corrige erro do typescript apos uma alteração)
@@ -14,6 +15,9 @@
 - if-else de componentes react = isGuestsOpenModal ? (<ComponenteCasoSejaTrue />) : (<ComponenteCasoSejaFalse />)
 - somente se for verdadeiro isGuestsOpenModal && (<ComponenteCasoSejaTrue />)
 
-## Feature Extras
+## Desafio
 - [] modal genérico
 - [] input genérico
+- [] listar os links
+- [] editar viagem
+- [] adicionar um novo convidados
