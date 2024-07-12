@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin(maxAge = 3600, origins = "*")
 @RequiredArgsConstructor
 @RequestMapping("/trips")
 @RestController
@@ -170,7 +171,7 @@ public class TripController {
         return ResponseEntity.notFound().build();
     }
 
-    // --------- Activitys ---------
+    // --------- Activities ---------
 
     /**
      * Endpoint responsável por cadastrar uma atividade para a viagem

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin(maxAge = 3600, origins = "*")
 @RequiredArgsConstructor
 @RequestMapping("/participants")
 @RestController
