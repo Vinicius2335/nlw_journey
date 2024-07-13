@@ -83,9 +83,9 @@ export function Activities({ onOpenActivityModal }: ActivitiesProps) {
                         className="space-y-2.5">
                         <div className="px-4 py-2.5 bg-zinc-900 rounded-xl shadow-shape flex items-center gap-3">
                           {checkIfDatePassed(activity.occurs_at) ? (
-                            <CircleCheck className="size-5 text-line-300" />
+                            <CircleCheck className="size-5 text-lime-300" />
                           ) : (
-                            <CircleDashed className="size-5 text-line-300" />
+                            <CircleDashed className="size-5 text-zinc-400" />
                           )}
 
                           <span className="text-zinc-100">{activity.title}</span>

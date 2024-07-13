@@ -32,7 +32,7 @@ export function Guests() {
               <span className="block text-sm text-zinc-400 truncate">{participant.email}</span>
             </div>
             {participant.is_confirmed ? (
-              <CheckCircle2 className="size-5 text-zinc-400 shrink-0" />
+              <CheckCircle2 className="size-5 text-lime-300 shrink-0" />
             ) : (
               <CircleDashed className="size-5 text-zinc-400 shrink-0" />
             )}

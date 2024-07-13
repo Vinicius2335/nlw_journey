@@ -6,9 +6,11 @@ import { Guests } from "./guests"
 import { ImportantLinks } from "./important-links"
 import { TripDetailHeader } from "./trip-detail-header"
 import { Button } from "../../components/button"
+import { InviteGuestModal } from "./invite-guest-modal"
 
 export function TripDetailsPage() {
   const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] = useState(false)
+  const [isInviteGuestModalOpen, setIsInviteGuestModalOpen] = useState(false)
 
   function openActivityModal() {
     setIsCreateActivityModalOpen(true)
@@ -16,6 +18,14 @@ export function TripDetailsPage() {
 
   function closeActivityModal() {
     setIsCreateActivityModalOpen(false)
+  }
+
+  function openInviteGuestModal() {
+    setIsInviteGuestModalOpen(true)
+  }
+
+  function closeInviteGuestModal() {
+    setIsInviteGuestModalOpen(false)
   }
 
   return (
@@ -41,6 +51,7 @@ export function TripDetailsPage() {
 
             <Button
               variant="secondary"
+              onClick={openInviteGuestModal}
               size="full">
               <UserCog className="size-5" />
               Gerenciar Convidados
@@ -52,6 +63,11 @@ export function TripDetailsPage() {
       {/* MODAL CREATE ACTIVITY */}
       {isCreateActivityModalOpen && (
         <CreateActivityModal onCloseActivityModal={closeActivityModal} />
+      )}
+
+      {/* MODAL INVITE NEW GUEST */}
+      {isInviteGuestModalOpen && (
+        <InviteGuestModal onCloseInviteGuestModal={closeInviteGuestModal} />
       )}
     </div>
   )
