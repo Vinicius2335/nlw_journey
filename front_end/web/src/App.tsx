@@ -1,15 +1,14 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import { CreateTripPage } from "./pages/create-trip";
-import { TripDetailsPage } from "./pages/trip-details";
-import ErrorPage from "./pages/error";
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { Slide, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { CreateTripPage } from "./pages/create-trip"
+import ErrorPage from "./pages/error"
+import { TripDetailsPage } from "./pages/trip-details"
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <CreateTripPage />,
+    element: <CreateTripPage />
   },
   {
     path: "/trips/:tripId",
@@ -17,13 +16,29 @@ const router = createBrowserRouter([
   },
   {
     path: "/*",
-    element: <ErrorPage />,
+    element: <ErrorPage />
   }
-]);
+])
 
 // name export -> evita importações com nomes errados
 export function App() {
   return (
-    <RouterProvider router={router} />
+    <>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme="dark"
+        transition={Slide}
+      />
+      <RouterProvider router={router} />
+    </>
   )
 }

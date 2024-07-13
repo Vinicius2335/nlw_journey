@@ -7,6 +7,7 @@ import { InviteGuestsModal } from "./invite-guests-modal"
 import { DestinationAndDateStep } from "./steps/destination-and-date-step"
 import { InviteGuestsStep } from "./steps/invite-guests-step"
 import { TripRequest } from "../../model/Trip"
+import { toast } from "react-toastify"
 
 // name export -> evita importações com nomes errados
 export function CreateTripPage() {
@@ -53,13 +54,11 @@ export function CreateTripPage() {
     const email = data.get("email")?.toString()
 
     if (!email) {
-      // TODO - ALERT
-      return
+      return toast.error("Campo de e-mail obrigatório.")
     }
 
     if (emailsToInvite.includes(email)) {
-      // TODO - ALERT
-      return
+      return toast.error("E-mail já está cadastrado.")
     }
 
     setEmailsToInvite([...emailsToInvite, email])
@@ -76,21 +75,17 @@ export function CreateTripPage() {
   async function createTrip(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    // NOTE - ALERT
     if (!destination) {
-      return
+      return toast.error("Campo de destino obrigatório.")
     }
-
     if (!eventStartAndEndDates?.from || !eventStartAndEndDates?.to) {
-      return
+      return toast.error("Campo de data e hora são obrigatórios.")
     }
-
     if (emailsToInvite.length === 0) {
-      return
+      return toast.error("Lista de convidados deve possuir pelo menos 1 registro.")
     }
-
     if (!ownerName || !ownerEmail) {
-      return
+      return toast.error("Nome ou e-mail do proprietário da viagem devem ser preenchido.")
     }
 
     const request: TripRequest = {
