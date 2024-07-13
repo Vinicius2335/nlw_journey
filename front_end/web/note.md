@@ -18,8 +18,8 @@
 - react router dom >= v6 -> external link, precisa adicionar 'https://'
 
 ## Desafio
-- [] modal genérico
-- [] input genérico
+- [x] modal genérico
+- [x] input genérico
 - [x] listar os links
 - [x] adicionar novo link
 - [] editar viagem

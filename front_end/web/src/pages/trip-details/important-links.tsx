@@ -1,7 +1,7 @@
 import { Link2, Plus } from "lucide-react"
-import { Button } from "../../components/button"
-import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { Button } from "../../components/button"
 import { api } from "../../lib/axios"
 import { Link, LinkListResponse } from "../../model/Link"
 import { CreateLinkModal } from "./create-link-modal"
@@ -14,7 +14,7 @@ export function ImportantLinks() {
   const [links, setLinks] = useState<Link[]>([])
   const [isLinkModalOpen, setIsLinkModalOpen] = useState(false)
 
-  function closeLinkInput() {
+  function closeLinkModal() {
     setIsLinkModalOpen(false)
   }
 
@@ -64,7 +64,7 @@ export function ImportantLinks() {
         Cadastrar Novo Link
       </Button>
 
-      {isLinkModalOpen && <CreateLinkModal onCloseLinkModal={closeLinkInput} />}
+      {isLinkModalOpen && <CreateLinkModal onCloseLinkModal={closeLinkModal} />}
     </div>
   )
 }
