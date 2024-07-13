@@ -14,10 +14,13 @@
 - flex-1 => ocupa o máximo de espaço possivel, pode diminuir para ocupar menos espaço e não tem uma largura base definida
 - if-else de componentes react = isGuestsOpenModal ? (<ComponenteCasoSejaTrue />) : (<ComponenteCasoSejaFalse />)
 - somente se for verdadeiro isGuestsOpenModal && (<ComponenteCasoSejaTrue />)
+- navigate(0) => reload page
+- react router dom >= v6 -> external link, precisa adicionar 'https://'
 
 ## Desafio
 - [] modal genérico
 - [] input genérico
-- [] listar os links
+- [x] listar os links
+- [x] adicionar novo link
 - [] editar viagem
 - [] adicionar um novo convidados

@@ -6,5 +6,5 @@ export interface Participant {
   id: string
   name: string
   email: string
-  confirmed: boolean
+  is_confirmed: boolean
 }

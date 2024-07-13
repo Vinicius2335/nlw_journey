@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { api } from "../../lib/axios"
 import { Link, LinkListResponse } from "../../model/Link"
+import { CreateLinkModal } from "./create-link-modal"
 
 /**
  * Componente de visualização e adição de links importantes para a viagem
@@ -11,6 +12,15 @@ import { Link, LinkListResponse } from "../../model/Link"
 export function ImportantLinks() {
   const { tripId } = useParams()
   const [links, setLinks] = useState<Link[]>([])
+  const [isLinkModalOpen, setIsLinkModalOpen] = useState(false)
+
+  function closeLinkInput() {
+    setIsLinkModalOpen(false)
+  }
+
+  function openLinkModal() {
+    setIsLinkModalOpen(true)
+  }
 
   useEffect(() => {
     api.get<LinkListResponse>(`/trips/${tripId}/links`).then(resp => setLinks(resp.data.links))
@@ -24,12 +34,15 @@ export function ImportantLinks() {
         {links.length > 0 ? (
           links.map(link => {
             return (
-              <div key={link.id} className="flex items-center justify-between gap-4">
+              <div
+                key={link.id}
+                className="flex items-center justify-between gap-4">
                 <div className="space-y-1.5">
                   <span className="block font-medium text-zinc-100">{link.title}</span>
                   <a
-                    href={link.url}
+                    href={"https://" + link.url}
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="block text-xs text-zinc-400 truncate hover:text-zinc-200 transition-colors">
                     {link.url}
                   </a>
@@ -45,10 +58,13 @@ export function ImportantLinks() {
 
       <Button
         variant="secondary"
+        onClick={openLinkModal}
         size="full">
         <Plus className="size-5" />
         Cadastrar Novo Link
       </Button>
+
+      {isLinkModalOpen && <CreateLinkModal onCloseLinkModal={closeLinkInput} />}
     </div>
   )
 }

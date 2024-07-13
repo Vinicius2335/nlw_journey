@@ -5,7 +5,7 @@ export interface Trip {
   ends_at: string
   owner_email: string
   owner_name: string
-  confirmed: boolean
+  is_confirmed: boolean
 }
 
 export interface TripRequest {
@@ -14,5 +14,5 @@ export interface TripRequest {
   ends_at: string
   emails_to_invite: string[]
   owner_name: string
-  ownerEmail: string
+  owner_email: string
 }
