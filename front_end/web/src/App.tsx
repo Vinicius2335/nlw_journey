@@ -38,7 +38,9 @@ export function App() {
         theme="dark"
         transition={Slide}
       />
-      <RouterProvider router={router} />
+      <main>
+        <RouterProvider router={router} />
+      </main>
     </>
   )
 }

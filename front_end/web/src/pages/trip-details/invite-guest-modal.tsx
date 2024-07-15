@@ -9,6 +9,9 @@ interface InviteGuestModalProps {
   onCloseInviteGuestModal: () => void
 }
 
+/**
+ * Modal responsável por convidar um participante
+ */
 export function InviteGuestModal({ onCloseInviteGuestModal }: InviteGuestModalProps) {
   const { tripId } = useParams()
   const navigate = useNavigate()
@@ -17,11 +20,9 @@ export function InviteGuestModal({ onCloseInviteGuestModal }: InviteGuestModalPr
     event.preventDefault()
 
     const data = new FormData(event.currentTarget)
-    const name = data.get('name')?.toString()
     const email = data.get('email')?.toString()
+    const name = ""
 
-    console.log({name, email});
-    
     await api.post(`/trips/${tripId}/invite`, {name, email})
 
     navigate(0)

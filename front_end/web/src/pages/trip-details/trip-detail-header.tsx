@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { api } from "../../lib/axios"
 import { Trip } from "../../model/Trip"
 import { format } from "date-fns"
+import { UpdateTripModal } from "./update-trip-modal"
 
 /**
  * Header contendo o destino e a data da viagem
@@ -12,12 +13,21 @@ import { format } from "date-fns"
 export function TripDetailHeader() {
   const { tripId } = useParams()
   const [trip, setTrip] = useState<Trip | undefined>()
+  const [isUpdateTripModelOpen, setIsUpdateTripModelOpen] = useState(false)
 
   const displayedDate = trip
     ? format(trip.starts_at, "d ' de ' LLL")
         .concat(" até ")
         .concat(format(trip.ends_at, "d ' de ' LLL"))
     : null
+
+    function openUpdateTripModal() {
+      setIsUpdateTripModelOpen(true)
+    }
+  
+    function closeUpdateTripModal() {
+      setIsUpdateTripModelOpen(false)
+    }
 
   useEffect(() => {
     api.get<Trip>(`/trips/${tripId}`).then(resp => setTrip(resp.data))
@@ -38,11 +48,15 @@ export function TripDetailHeader() {
 
         <div className="w-px h-6 bg-zinc-800" />
 
-        <Button variant="secondary">
+        <Button variant="secondary" onClick={openUpdateTripModal}>
           Alterar local/data
           <Settings2 className="size-5" />
         </Button>
       </div>
+
+      {isUpdateTripModelOpen && (
+        <UpdateTripModal trip={trip} onCloseModal={closeUpdateTripModal} />
+      )}
     </div>
   )
 }

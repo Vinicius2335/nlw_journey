@@ -22,5 +22,5 @@
 - [x] input genérico
 - [x] listar os links
 - [x] adicionar novo link
-- [] editar viagem
-- [] adicionar um novo convidados
+- [x] editar viagem
+- [x] adicionar um novo convidados

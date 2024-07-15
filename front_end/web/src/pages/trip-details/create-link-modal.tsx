@@ -9,6 +9,9 @@ interface CreateLinkModalProps {
   onCloseLinkModal: () => void
 }
 
+/**
+ * Modal responsável por criar um link
+ */
 export function CreateLinkModal({ onCloseLinkModal }: CreateLinkModalProps) {
   const { tripId } = useParams()
   const navigate = useNavigate()
