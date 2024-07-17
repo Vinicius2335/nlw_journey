@@ -8,6 +8,7 @@ import {
   Inter_600SemiBold
 } from "@expo-google-fonts/inter"
 import { Loading } from "@/components/loading"
+import "@/utils/dayjsLocaleConfig"
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
