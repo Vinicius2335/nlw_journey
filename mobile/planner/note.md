@@ -15,9 +15,10 @@
 ## Não esquecer
 - como configurar as importaçoes em tsconfig.json
 - ``npx expo start``
-- arquivos com _ = arquivos de configuração das rotas de navegação
 - ``npx expo start --clear``
+- arquivos com _ = arquivos de configuração das rotas de navegação
 - quebrar a linha ``{"\n"}``
+- aula 03 - 01:52:00
 
 ## Exemplo Response
 - getById 

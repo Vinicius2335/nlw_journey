@@ -62,16 +62,16 @@ export default function Index() {
       return setStepForm(StepForm.ADD_EMAIL)
     }
 
-  Alert.alert("Nova Viagem", "Confirmar Viagem?", [
-    {
-      text: "Não",
-      style: "cancel"
-    },
-    {
-      text: "Sim",
-      onPress: createTrip
-    }
-  ])
+    Alert.alert("Nova Viagem", "Confirmar Viagem?", [
+      {
+        text: "Não",
+        style: "cancel"
+      },
+      {
+        text: "Sim",
+        onPress: createTrip
+      }
+    ])
   }
 
   function handleSelectDate(selectedDay: DateData) {
@@ -103,23 +103,18 @@ export default function Index() {
     setEmailToInvite("")
   }
 
-  async function saveTrip(tripId: string){
+  async function saveTrip(tripId: string) {
     try {
-
       await tripStorage.save(tripId)
       router.navigate("/trip/" + tripId)
-
-    }  catch(error){
-      Alert.alert(
-        "Salvar Viagem",
-        "Não foi possível salvar o id da viagem no dispositivo!"
-      )
+    } catch (error) {
+      Alert.alert("Salvar Viagem", "Não foi possível salvar o id da viagem no dispositivo!")
 
       console.error(error)
     }
   }
 
-  async function createTrip(){
+  async function createTrip() {
     try {
       setIsCreatingTrip(true)
 
@@ -130,35 +125,29 @@ export default function Index() {
         emails_to_invite: emailsToInvite
       })
 
-      Alert.alert(
-        "Nova Viagem",
-        "Viagem criada com sucesso!",
-        [
-          {
-            text: "OK. Continuar.",
-            onPress: () => saveTrip(newTrip.trip_id)
-          }
-        ]
-      )
-
+      Alert.alert("Nova Viagem", "Viagem criada com sucesso!", [
+        {
+          text: "OK. Continuar.",
+          onPress: () => saveTrip(newTrip.trip_id)
+        }
+      ])
     } catch (error) {
       console.error(Error)
       setIsCreatingTrip(false)
     }
   }
 
-  async function getTrip(){
+  async function getTrip() {
     try {
       const tripId = await tripStorage.get()
 
-      if (!tripId){
+      if (!tripId) {
         return setIsGettingTrip(false)
       }
 
       const trip = await tripServer.getById(tripId)
-      
 
-      if (trip){
+      if (trip) {
         return router.navigate("/trip/" + trip.id)
       }
     } catch (error) {
@@ -167,11 +156,15 @@ export default function Index() {
     }
   }
 
+  // Toda vez que a tela for renderizada
+  // é verificado se existe um tripId armazenado localmente no dispositivo
+  // se não, não faz nada
+  // se encontrado, redireciona o usuário para a tela de trip-details([id].tsx)
   useEffect(() => {
     getTrip()
   }, [])
 
-  if (isGettingTrip){
+  if (isGettingTrip) {
     return <Loading />
   }
 
@@ -228,7 +221,8 @@ export default function Index() {
             <View className="border-b py-3 border-zinc-800">
               <Button
                 variant="secondary"
-                onPress={() => setStepForm(StepForm.TRIP_DETAILS)}>
+                onPress={() => setStepForm(StepForm.TRIP_DETAILS)}
+              >
                 <Button.Title>Alterar Local/Data </Button.Title>
                 <Settings2
                   color={colors.zinc[200]}
@@ -244,7 +238,9 @@ export default function Index() {
               <Input.Field
                 placeholder="Quem estará na viagem?"
                 autoCorrect={false}
-                value={emailsToInvite.length > 0 ? `${emailsToInvite.length} pessoa(s) convidado(s)` : ""}
+                value={
+                  emailsToInvite.length > 0 ? `${emailsToInvite.length} pessoa(s) convidado(s)` : ""
+                }
                 onPress={() => {
                   Keyboard.dismiss()
                   setShowModal(StepModal.GUESTS)
@@ -255,7 +251,10 @@ export default function Index() {
           </>
         )}
 
-        <Button onPress={handleNextStepForm} isLoading={isCreatingTrip}>
+        <Button
+          onPress={handleNextStepForm}
+          isLoading={isCreatingTrip}
+        >
           <Button.Title>
             {stepForm === StepForm.TRIP_DETAILS ? "Continuar" : "Confirmar Viagem"}
           </Button.Title>
@@ -276,7 +275,8 @@ export default function Index() {
         title="Selecionar datas"
         subtitle="Selecione a data de ida e volta da viagem"
         visible={showModal === StepModal.CALENDAR}
-        onClose={() => setShowModal(StepModal.NONE)}>
+        onClose={() => setShowModal(StepModal.NONE)}
+      >
         <View className="gap-4 mt-4">
           <Calendar
             onDayPress={handleSelectDate}
@@ -294,7 +294,8 @@ export default function Index() {
         title="Selecionar Convidados"
         subtitle="Os convidados irão receber e-mails para confirmar a participação na viagem"
         visible={showModal === StepModal.GUESTS}
-        onClose={() => setShowModal(StepModal.NONE)}>
+        onClose={() => setShowModal(StepModal.NONE)}
+      >
         <View className="my-2 flex-wrap border-b border-zinc-800 py-5 items-start">
           {emailsToInvite.length > 0 ? (
             emailsToInvite.map(email => (
@@ -305,7 +306,9 @@ export default function Index() {
               />
             ))
           ) : (
-            <Text className="text-zinc-400 mb-2 text-base font-regular">Nenhum e-mail adicionado.</Text>
+            <Text className="text-zinc-400 mb-2 text-base font-regular">
+              Nenhum e-mail adicionado.
+            </Text>
           )}
         </View>
 
