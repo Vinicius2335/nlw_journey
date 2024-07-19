@@ -57,6 +57,10 @@ export default function Trip() {
     try {
       setIsLoadingTrip(true)
 
+      if (!tripParams.participant) {
+        setShowModal(StepModal.CONFIRM_ATTENDANCE)
+      }
+
       if (!tripParams.id) {
         return router.back()
       }
