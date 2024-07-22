@@ -1,5 +1,6 @@
 package com.github.vinicius2335.planner.modules.trip;
 
+import com.github.vinicius2335.planner.modules.trip.dtos.TripCreateRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

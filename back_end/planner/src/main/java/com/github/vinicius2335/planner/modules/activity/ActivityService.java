@@ -1,5 +1,6 @@
 package com.github.vinicius2335.planner.modules.activity;
 
+import com.github.vinicius2335.planner.modules.activity.dtos.*;
 import com.github.vinicius2335.planner.modules.trip.Trip;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

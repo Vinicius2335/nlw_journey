@@ -1,5 +1,9 @@
 package com.github.vinicius2335.planner.modules.link;
 
+import com.github.vinicius2335.planner.modules.link.dtos.LinkCreateRequest;
+import com.github.vinicius2335.planner.modules.link.dtos.LinkDetailsDTO;
+import com.github.vinicius2335.planner.modules.link.dtos.LinkIdResponse;
+import com.github.vinicius2335.planner.modules.link.dtos.LinkListResponse;
 import com.github.vinicius2335.planner.modules.trip.Trip;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

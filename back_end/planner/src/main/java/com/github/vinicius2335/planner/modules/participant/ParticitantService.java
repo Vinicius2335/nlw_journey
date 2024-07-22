@@ -1,5 +1,7 @@
 package com.github.vinicius2335.planner.modules.participant;
 
+import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantDetailsDTO;
+import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantIdResponse;
 import com.github.vinicius2335.planner.modules.trip.Trip;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

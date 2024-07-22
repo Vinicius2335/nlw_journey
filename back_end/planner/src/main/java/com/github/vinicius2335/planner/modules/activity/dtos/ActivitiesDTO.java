@@ -1,4 +1,4 @@
-package com.github.vinicius2335.planner.modules.activity;
+package com.github.vinicius2335.planner.modules.activity.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

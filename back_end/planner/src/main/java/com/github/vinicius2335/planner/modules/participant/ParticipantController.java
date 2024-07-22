@@ -1,5 +1,6 @@
 package com.github.vinicius2335.planner.modules.participant;
 
+import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantNameRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +18,13 @@ public class ParticipantController {
     /**
      * Endpoint responsável por confirmar o participante para a viagem
      * @param participantId identificador do participante
-     * @param request objeto que apresenta os dados necessários para confirmar viagem
+     * @param request Object que representa o nome do participante à ser confirmado
      * @return {@code Participant} confirmado
      */
-    @PostMapping("/{participantId}/confirm")
+    @PatchMapping("/{participantId}/confirm")
     public ResponseEntity<Participant> confirmParticipant(
             @PathVariable UUID participantId,
-            @RequestBody ParticipantCreateRequest request
+            @RequestBody ParticipantNameRequest request
     ){
         Optional<Participant> optParticipant = participantRepository.findById(participantId);
 

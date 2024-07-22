@@ -1,4 +1,4 @@
-package com.github.vinicius2335.planner.modules.link;
+package com.github.vinicius2335.planner.modules.link.dtos;
 
 import java.util.List;
 

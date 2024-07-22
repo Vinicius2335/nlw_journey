@@ -1,4 +1,4 @@
-package com.github.vinicius2335.planner.modules.trip;
+package com.github.vinicius2335.planner.modules.trip.dtos;
 
 import java.util.List;
 
