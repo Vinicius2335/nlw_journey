@@ -17,6 +17,10 @@
   - ``tern init ./internal/pgstore/migrations``
   - ``tern new --migrations ./internal/pgstore/migrations create_trips_table``
   - ``tern migrate --migrations ./internal/pgstore/migrations --config ./internal/pgstore/migrations/tern.conf``
+- [Go Playground Validator](https://github.com/go-playground/validator)
+  - pacote de validaçoes 
+- [wneessen go-mail](https://github.com/wneessen/go-mail)
+  - permite escrever email usando go 
 
 # Não esquecer
 - editor swagger
@@ -29,5 +33,3 @@
   - [Tutorial](https://stackoverflow.com/questions/75591450/how-to-generate-interface-implementations-in-vs-code-for-go)
   - api *API spec.ServerInterface => funcionou
   - api API spec.ServerInterface
-
-20:56
