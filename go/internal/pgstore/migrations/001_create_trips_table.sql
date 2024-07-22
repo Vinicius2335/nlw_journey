@@ -6,8 +6,8 @@ CREATE TABLE
     "owner_email" VARCHAR(255) NOT NULL,
     "owner_name" VARCHAR(255) NOT NULL,
     "is_confirmed" BOOLEAN NOT NULL DEFAULT false,
-    "starts_At" TIMESTAMP NOT NULL,
-    "ends_At" TIMESTAMP NOT NULL
+    "starts_at" TIMESTAMP NOT NULL,
+    "ends_at" TIMESTAMP NOT NULL
   );
 
 ---- create above / drop below ----
