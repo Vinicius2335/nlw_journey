@@ -1,14 +1,17 @@
 package com.github.vinicius2335.planner.modules.trip.controllers;
 
+import com.github.vinicius2335.planner.core.annotations.TripEndsAtConstraint;
 import com.github.vinicius2335.planner.modules.participant.ParticitantService;
 import com.github.vinicius2335.planner.modules.trip.Trip;
 import com.github.vinicius2335.planner.modules.trip.dtos.TripCreateRequest;
 import com.github.vinicius2335.planner.modules.trip.dtos.TripIdResponse;
 import com.github.vinicius2335.planner.modules.trip.TripRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -18,6 +21,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/trips")
 @RestController
+@Validated
 public class TripController {
     private final TripRepository tripRepository;
     private final ParticitantService particitantService;
@@ -30,7 +34,9 @@ public class TripController {
      */
     @PostMapping
     @Transactional
-    public ResponseEntity<TripIdResponse> createTrip(@RequestBody TripCreateRequest request) {
+    public ResponseEntity<TripIdResponse> createTrip(
+            @RequestBody @Valid TripCreateRequest request
+    ) {
         Trip newTrip = new Trip(request);
 
         tripRepository.save(newTrip);
@@ -67,7 +73,7 @@ public class TripController {
     @PutMapping("/{tripId}")
     public ResponseEntity<Trip> updateTrip(
             @PathVariable UUID tripId,
-            @RequestBody TripCreateRequest request
+            @RequestBody @Valid @TripEndsAtConstraint TripCreateRequest request
     ) {
         Optional<Trip> optTrip = tripRepository.findById(tripId);
 
