@@ -50,7 +50,7 @@ public class TripController {
      * Endpoint responsável por retornar os detalhes de uma viagem
      * @param tripId tripId identificador da viagem
      * @return {@code Trip} - Viagem encontrada
-     * @throws TripNotFoundException quando viagem nao for encontrado pelo tripId
+     * @throws TripNotFoundException quando viagem nao for encontrado pelo {@code tripId}
      */
     @GetMapping("/{tripId}")
     public ResponseEntity<Trip> getTripDetails(@PathVariable UUID tripId) throws TripNotFoundException {
@@ -63,7 +63,7 @@ public class TripController {
      * @param tripId  identificador da viagem
      * @param request objeto que apresenta os campos necessários para atualizar uma viagem
      * @return {@code Trip} - Viagem atualizada
-     * @throws TripNotFoundException quando viagem nao for encontrado pelo tripId
+     * @throws TripNotFoundException quando viagem nao for encontrado pelo {@code tripId}
      */
     @Transactional
     @PutMapping("/{tripId}")
@@ -79,7 +79,7 @@ public class TripController {
      *
      * @param tripId identificador da viagem
      * @return {@code Trip} - Viagem criada
-     * @throws TripNotFoundException quando viagem nao for encontrado pelo tripId
+     * @throws TripNotFoundException quando viagem nao for encontrado pelo {@code tripId}
      */
     @Transactional
     @GetMapping("/{tripId}/confirm")
