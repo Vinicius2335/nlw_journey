@@ -3,9 +3,10 @@ package com.github.vinicius2335.planner.modules.trip.controllers;
 import com.github.vinicius2335.planner.core.annotations.TripEndsAtConstraint;
 import com.github.vinicius2335.planner.modules.participant.ParticitantService;
 import com.github.vinicius2335.planner.modules.trip.Trip;
+import com.github.vinicius2335.planner.modules.trip.TripService;
 import com.github.vinicius2335.planner.modules.trip.dtos.TripCreateRequest;
 import com.github.vinicius2335.planner.modules.trip.dtos.TripIdResponse;
-import com.github.vinicius2335.planner.modules.trip.TripRepository;
+import com.github.vinicius2335.planner.modules.trip.exceptions.TripNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @CrossOrigin(maxAge = 3600, origins = "*")
@@ -23,8 +23,8 @@ import java.util.UUID;
 @RestController
 @Validated
 public class TripController {
-    private final TripRepository tripRepository;
     private final ParticitantService particitantService;
+    private final TripService tripService;
 
     /**
      * Endpoint responável por criar uma nova viagem
@@ -37,9 +37,7 @@ public class TripController {
     public ResponseEntity<TripIdResponse> createTrip(
             @RequestBody @Valid TripCreateRequest request
     ) {
-        Trip newTrip = new Trip(request);
-
-        tripRepository.save(newTrip);
+        Trip newTrip = tripService.createTrip(request);
 
         particitantService.registerParticipantsToTrip(request.emailsToInvite(), newTrip);
 
@@ -50,16 +48,13 @@ public class TripController {
 
     /**
      * Endpoint responsável por retornar os detalhes de uma viagem
-     *
-     * @param tripId identificador da viagem
-     * @return Viagem encontrada
+     * @param tripId tripId identificador da viagem
+     * @return {@code Trip} - Viagem encontrada
+     * @throws TripNotFoundException quando viagem nao for encontrado pelo tripId
      */
     @GetMapping("/{tripId}")
-    public ResponseEntity<Trip> getTripDetails(@PathVariable UUID tripId) {
-        Optional<Trip> optTrip = tripRepository.findById(tripId);
-
-        return optTrip.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Trip> getTripDetails(@PathVariable UUID tripId) throws TripNotFoundException {
+        return ResponseEntity.ok(tripService.findTripById(tripId));
     }
 
     /**
@@ -68,25 +63,15 @@ public class TripController {
      * @param tripId  identificador da viagem
      * @param request objeto que apresenta os campos necessários para atualizar uma viagem
      * @return {@code Trip} - Viagem atualizada
+     * @throws TripNotFoundException quando viagem nao for encontrado pelo tripId
      */
     @Transactional
     @PutMapping("/{tripId}")
     public ResponseEntity<Trip> updateTrip(
             @PathVariable UUID tripId,
             @RequestBody @Valid @TripEndsAtConstraint TripCreateRequest request
-    ) {
-        Optional<Trip> optTrip = tripRepository.findById(tripId);
-
-        if (optTrip.isPresent()) {
-            Trip trip = optTrip.get();
-            trip.updateTrip(request);
-
-            tripRepository.save(trip);
-
-            return ResponseEntity.ok(trip);
-        }
-
-        return ResponseEntity.notFound().build();
+    ) throws TripNotFoundException {
+        return ResponseEntity.ok(tripService.updateTrip(tripId, request));
     }
 
     /**
@@ -94,25 +79,18 @@ public class TripController {
      *
      * @param tripId identificador da viagem
      * @return {@code Trip} - Viagem criada
+     * @throws TripNotFoundException quando viagem nao for encontrado pelo tripId
      */
     @Transactional
     @GetMapping("/{tripId}/confirm")
     public ResponseEntity<Trip> confirmTrip(
             @PathVariable UUID tripId
-    ) {
-        Optional<Trip> optTrip = tripRepository.findById(tripId);
+    ) throws TripNotFoundException {
+        Trip trip = tripService.confirmTrip(tripId);
 
-        if (optTrip.isPresent()) {
-            Trip trip = optTrip.get();
-            trip.setConfirmed(true);
+        particitantService.triggerConfirmationEmailToParticipants(trip.getId());
 
-            tripRepository.save(trip);
-            particitantService.triggerConfirmationEmailToParticipants(trip.getId());
-
-            return ResponseEntity.ok(trip);
-        }
-
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(trip);
     }
 
 }
