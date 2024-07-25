@@ -24,9 +24,12 @@ public class ActivityService {
      * @param request objeto que apresenta os campos necessário para criar uma nova atividade
      * @param trip    viagem se relacionará com a viagem criada
      * @return {@code ActivityIdResponse} objeto que representa o id da atividade criada
+     * @throws ActivityOccursAtInvalidException quando horário da atividade for inválido
      */
     @Transactional
-    public ActivityIdResponse registerActivity(ActivityCreateRequest request, Trip trip) {
+    public ActivityIdResponse registerActivity(ActivityCreateRequest request, Trip trip) throws ActivityOccursAtInvalidException {
+        validateActivityCreateRequestFieldOccursAt(trip, request.occursAt());
+
         Activity newActivity = new Activity(request, trip);
 
         activityRepository.save(newActivity);
@@ -77,11 +80,27 @@ public class ActivityService {
         return new ActivityListResponse(activities);
     }
 
-    // TODO - Criar uma Exception depois
-    public boolean validateActivityCreateRequestFieldOccursAt(Trip trip, String occursAt){
+    /**
+     * Valida o data/hora de ocorrencia da atividade
+     * @param trip identificador da viagem
+     * @param occursAt horario da atividade
+     * @throws ActivityOccursAtInvalidException quando {@code occursAt} for inválido
+     */
+    private void validateActivityCreateRequestFieldOccursAt(
+            Trip trip,
+            String occursAt
+    ) throws ActivityOccursAtInvalidException {
         LocalDateTime activityOccursAtTime = LocalDateTime.parse(occursAt, DateTimeFormatter.ISO_DATE_TIME);
 
         // valida se a atividade ocorre entre o tempo de inicio e fim da viagem
-        return !activityOccursAtTime.isBefore(trip.getStartsAt()) && !activityOccursAtTime.isAfter(trip.getEndsAt());
+        boolean isActivityOccursValid = !activityOccursAtTime.isBefore(trip.getStartsAt())
+                && !activityOccursAtTime.isAfter(trip.getEndsAt());
+
+        String pattern = "dd/MM/yyyy hh:mm";
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(pattern);
+
+        if (!isActivityOccursValid) {
+            throw new ActivityOccursAtInvalidException("Data/Hora para que a atividade ocorra é inválido, deve ser entre " + trip.getStartsAt().format(dtf) + " até " + trip.getEndsAt().format(dtf));
+        }
     }
 }

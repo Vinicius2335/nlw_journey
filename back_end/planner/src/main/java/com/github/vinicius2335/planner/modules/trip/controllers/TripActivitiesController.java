@@ -1,11 +1,14 @@
 package com.github.vinicius2335.planner.modules.trip.controllers;
 
+import com.github.vinicius2335.planner.modules.activity.ActivityOccursAtInvalidException;
 import com.github.vinicius2335.planner.modules.activity.ActivityService;
 import com.github.vinicius2335.planner.modules.activity.dtos.ActivityCreateRequest;
 import com.github.vinicius2335.planner.modules.activity.dtos.ActivityIdResponse;
 import com.github.vinicius2335.planner.modules.activity.dtos.ActivityListResponse;
 import com.github.vinicius2335.planner.modules.trip.Trip;
 import com.github.vinicius2335.planner.modules.trip.TripRepository;
+import com.github.vinicius2335.planner.modules.trip.TripService;
+import com.github.vinicius2335.planner.modules.trip.exceptions.TripNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,34 +24,27 @@ import java.util.UUID;
 public class TripActivitiesController {
     private final TripRepository tripRepository;
     private final ActivityService activityService;
+    private final TripService tripService;
 
     /**
      * Endpoint responsável por cadastrar uma atividade para a viagem
      * @param tripId identificador da viagem
      * @param request objeto que apresenta os campos necessários para criar uma nova atividade
      * @return {@code ActivityIdResponse} objeto que representa o id da atividade criada
+     * @throws TripNotFoundException quando viagem nao for encontrado pelo {@code tripId}
+     * @throws ActivityOccursAtInvalidException quando horário da atividade for inválido
      */
     @PostMapping("/{tripId}/activities")
     public ResponseEntity<ActivityIdResponse> registerActivity(
             @PathVariable UUID tripId,
             @RequestBody @Valid ActivityCreateRequest request
-    ){
-        Optional<Trip> optTrip = tripRepository.findById(tripId);
+    ) throws TripNotFoundException, ActivityOccursAtInvalidException {
+        Trip trip = tripService.findTripById(tripId);
 
-        if (optTrip.isPresent()){
-            Trip trip = optTrip.get();
+        ActivityIdResponse response = activityService.registerActivity(request, trip);
 
-            if (activityService.validateActivityCreateRequestFieldOccursAt(trip, request.occursAt())){
-                ActivityIdResponse response = activityService.registerActivity(request, trip);
-
-                return ResponseEntity
-                        .ok(response);
-            }
-
-            return ResponseEntity.badRequest().build();
-        }
-
-        return ResponseEntity.notFound().build();
+        return ResponseEntity
+                .ok(response);
     }
 
     /**

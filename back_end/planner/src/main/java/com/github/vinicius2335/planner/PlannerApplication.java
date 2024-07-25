@@ -65,7 +65,7 @@ public class PlannerApplication {
 
 			Link link = Link.builder()
 					.title("Google")
-					.url("www.google.com.br")
+					.url("https://www.google.com.br")
 					.trip(tripSaved)
 					.build();
 
