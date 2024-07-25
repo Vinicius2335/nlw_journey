@@ -6,6 +6,7 @@ import com.github.vinicius2335.planner.modules.activity.dtos.ActivityIdResponse;
 import com.github.vinicius2335.planner.modules.activity.dtos.ActivityListResponse;
 import com.github.vinicius2335.planner.modules.trip.Trip;
 import com.github.vinicius2335.planner.modules.trip.TripRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,16 +31,21 @@ public class TripActivitiesController {
     @PostMapping("/{tripId}/activities")
     public ResponseEntity<ActivityIdResponse> registerActivity(
             @PathVariable UUID tripId,
-            @RequestBody ActivityCreateRequest request
+            @RequestBody @Valid ActivityCreateRequest request
     ){
         Optional<Trip> optTrip = tripRepository.findById(tripId);
 
         if (optTrip.isPresent()){
             Trip trip = optTrip.get();
-            ActivityIdResponse response = activityService.registerActivity(request, trip);
 
-            return ResponseEntity
-                    .ok(response);
+            if (activityService.validateActivityCreateRequestFieldOccursAt(trip, request.occursAt())){
+                ActivityIdResponse response = activityService.registerActivity(request, trip);
+
+                return ResponseEntity
+                        .ok(response);
+            }
+
+            return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity.notFound().build();

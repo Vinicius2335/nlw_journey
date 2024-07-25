@@ -18,7 +18,6 @@ import org.springframework.context.annotation.Bean;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Locale;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication

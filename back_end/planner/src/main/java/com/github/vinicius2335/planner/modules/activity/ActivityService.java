@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -73,5 +75,13 @@ public class ActivityService {
         }
 
         return new ActivityListResponse(activities);
+    }
+
+    // TODO - Criar uma Exception depois
+    public boolean validateActivityCreateRequestFieldOccursAt(Trip trip, String occursAt){
+        LocalDateTime activityOccursAtTime = LocalDateTime.parse(occursAt, DateTimeFormatter.ISO_DATE_TIME);
+
+        // valida se a atividade ocorre entre o tempo de inicio e fim da viagem
+        return !activityOccursAtTime.isBefore(trip.getStartsAt()) && !activityOccursAtTime.isAfter(trip.getEndsAt());
     }
 }

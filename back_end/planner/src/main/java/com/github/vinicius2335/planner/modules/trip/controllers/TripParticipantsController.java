@@ -7,6 +7,7 @@ import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantIdRes
 import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantListResponse;
 import com.github.vinicius2335.planner.modules.trip.Trip;
 import com.github.vinicius2335.planner.modules.trip.TripRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class TripParticipantsController {
     @PostMapping("/{tripId}/invite")
     public ResponseEntity<ParticipantIdResponse> inviteParticipant(
             @PathVariable UUID tripId,
-            @RequestBody ParticipantEmailRequest request
+            @RequestBody @Valid ParticipantEmailRequest request
     ) {
         Optional<Trip> optTrip = tripRepository.findById(tripId);
 

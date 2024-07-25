@@ -6,6 +6,7 @@ import com.github.vinicius2335.planner.modules.link.dtos.LinkIdResponse;
 import com.github.vinicius2335.planner.modules.link.dtos.LinkListResponse;
 import com.github.vinicius2335.planner.modules.trip.Trip;
 import com.github.vinicius2335.planner.modules.trip.TripRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class TripLinksController {
     @PostMapping("/{tripId}/links")
     public ResponseEntity<LinkIdResponse> registerLink(
             @PathVariable UUID tripId,
-            @RequestBody LinkCreateRequest request
+            @RequestBody @Valid LinkCreateRequest request
     ){
         Optional<Trip> optTrip = tripRepository.findById(tripId);
 

@@ -1,6 +1,7 @@
 package com.github.vinicius2335.planner.modules.participant;
 
 import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantNameRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class ParticipantController {
     @PatchMapping("/{participantId}/confirm")
     public ResponseEntity<Participant> confirmParticipant(
             @PathVariable UUID participantId,
-            @RequestBody ParticipantNameRequest request
+            @RequestBody @Valid ParticipantNameRequest request
     ){
         Optional<Participant> optParticipant = participantRepository.findById(participantId);
 

@@ -11,6 +11,7 @@ import java.util.List;
 @TripEndsAtConstraint
 public record TripCreateRequest(
         @NotBlank(message = "Trip Destination: cannot be null or empty")
+        @Size(min = 4, message = "Trip Destination: cannot be less than 4 characters")
         String destination,
 
         @TripStartsAtConstraint
