@@ -1,5 +1,6 @@
 package com.github.vinicius2335.planner.api.exceptionhandler;
 
+import com.github.vinicius2335.planner.modules.activity.ActivityOccursAtInvalidException;
 import com.github.vinicius2335.planner.modules.trip.exceptions.TripNotFoundException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.*;
@@ -48,6 +49,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ProblemDetail handleTripNotFound(TripNotFoundException ex){
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
         problemDetail.setTitle("Recurso não encontrada");
+        problemDetail.setProperty("message", ex.getMessage());
+
+        return problemDetail;
+    }
+
+    @ExceptionHandler(ActivityOccursAtInvalidException.class)
+    public ProblemDetail handlerActivityOccursAtInvalid(
+            ActivityOccursAtInvalidException ex
+    ) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setTitle("A atividade ocorre em horário inválido");
         problemDetail.setProperty("message", ex.getMessage());
 
         return problemDetail;
