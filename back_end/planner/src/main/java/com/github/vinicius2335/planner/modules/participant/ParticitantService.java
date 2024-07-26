@@ -46,6 +46,10 @@ public class ParticitantService {
         Participant participant = new Participant(email, trip);
         participantRepository.save(participant);
 
+        if (trip.isConfirmed()) {
+            triggerConfirmationEmailToParticipant(email);
+        }
+
         return new ParticipantIdResponse(participant.getId());
     }
 

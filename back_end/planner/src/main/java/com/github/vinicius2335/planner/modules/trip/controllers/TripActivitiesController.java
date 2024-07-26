@@ -6,7 +6,6 @@ import com.github.vinicius2335.planner.modules.activity.dtos.ActivityCreateReque
 import com.github.vinicius2335.planner.modules.activity.dtos.ActivityIdResponse;
 import com.github.vinicius2335.planner.modules.activity.dtos.ActivityListResponse;
 import com.github.vinicius2335.planner.modules.trip.Trip;
-import com.github.vinicius2335.planner.modules.trip.TripRepository;
 import com.github.vinicius2335.planner.modules.trip.TripService;
 import com.github.vinicius2335.planner.modules.trip.exceptions.TripNotFoundException;
 import jakarta.validation.Valid;
@@ -22,7 +21,6 @@ import java.util.UUID;
 @RequestMapping("/trips")
 @RestController
 public class TripActivitiesController {
-    private final TripRepository tripRepository;
     private final ActivityService activityService;
     private final TripService tripService;
 
@@ -51,21 +49,16 @@ public class TripActivitiesController {
      * Endpoint responsável por retornar todas as atividades relacionadas a uma viagem
      * @param tripId identificador da viagem
      * @return {@code ActivityListResponse} objeto que representa uma lista com os detalhes das atividades relacionadas a viagem
+     * @throws TripNotFoundException quando viagem nao for encontrado pelo {@code tripId}
      */
     @GetMapping("/{tripId}/activities")
     public ResponseEntity<ActivityListResponse> getAllActivities(
             @PathVariable UUID tripId
-    ){
-        Optional<Trip> optTrip = tripRepository.findById(tripId);
+    ) throws TripNotFoundException {
+        Trip trip = tripService.findTripById(tripId);
+        ActivityListResponse response = activityService.getAllActivitiesByTripId(trip.getId());
 
-        if (optTrip.isPresent()){
-            Trip trip = optTrip.get();
-            ActivityListResponse response = activityService.getAllActivitiesByTripId(trip.getId());
-
-            return ResponseEntity
-                    .ok(response);
-        }
-
-        return ResponseEntity.notFound().build();
+        return ResponseEntity
+                .ok(response);
     }
 }
