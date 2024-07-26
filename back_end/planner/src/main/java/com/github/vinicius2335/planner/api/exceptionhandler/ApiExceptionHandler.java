@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.time.format.DateTimeParseException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -55,7 +57,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ActivityOccursAtInvalidException.class)
-    public ProblemDetail handlerActivityOccursAtInvalid(
+    public ProblemDetail handleActivityOccursAtInvalid(
             ActivityOccursAtInvalidException ex
     ) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
@@ -63,5 +65,33 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         problemDetail.setProperty("message", ex.getMessage());
 
         return problemDetail;
+    }
+
+    @ExceptionHandler(DateTimeParseException.class)
+    public ProblemDetail handleDateTimeParse(
+            DateTimeParseException ex
+    ) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setTitle("Formato da data inválido");
+        problemDetail.setProperty("message", ex.getMessage());
+        problemDetail.setProperty("format", "yyyy-mm-ddThh:mm:ss.sssZ");
+        problemDetail.setProperty("example", "2024-07-26T14:32:09.95Z");
+
+        return problemDetail;
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleNoResourceFoundException(
+            NoResourceFoundException ex,
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode status,
+            @NonNull WebRequest request
+    ) {
+
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setTitle("Endpoint não encontrado");
+        problemDetail.setProperty("message", ex.getMessage());
+
+        return super.handleExceptionInternal(ex, problemDetail, headers, status, request);
     }
 }
