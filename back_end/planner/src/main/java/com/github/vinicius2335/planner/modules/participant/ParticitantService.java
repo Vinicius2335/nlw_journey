@@ -102,4 +102,25 @@ public class ParticitantService {
                         participant.isConfirmed()
                 )).toList();
     }
+
+    /**
+     * Retorna participante encontrado pelo id
+     * @param participantId identificador do participante
+     * @return {@code Participant} encontrado
+     * @throws ParticipantNotFoundException quando participante não foi encontrado pelo {@code participantId}
+     */
+    public Participant getParticipantById(UUID participantId)
+            throws ParticipantNotFoundException {
+        return participantRepository.findById(participantId)
+                .orElseThrow(() -> new ParticipantNotFoundException("Participante não foi encontrado pelo id: " + participantId));
+    }
+
+    /**
+     * Salva um novo participante
+     * @param participant a ser salvo
+     * @return {@code Participant} salvo
+     */
+    public Participant saveParticipant(Participant participant){
+        return participantRepository.save(participant);
+    }
 }

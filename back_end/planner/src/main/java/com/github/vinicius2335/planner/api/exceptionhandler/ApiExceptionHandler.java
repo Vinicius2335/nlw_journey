@@ -2,6 +2,7 @@ package com.github.vinicius2335.planner.api.exceptionhandler;
 
 import com.github.vinicius2335.planner.modules.activity.ActivityOccursAtInvalidException;
 import com.github.vinicius2335.planner.modules.email.EmailServiceException;
+import com.github.vinicius2335.planner.modules.participant.ParticipantNotFoundException;
 import com.github.vinicius2335.planner.modules.trip.exceptions.TripNotFoundException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.*;
@@ -63,10 +64,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return super.handleExceptionInternal(ex, problemDetail, headers, status, request);
     }
 
-    @ExceptionHandler(TripNotFoundException.class)
-    public ProblemDetail handleTripNotFound(TripNotFoundException ex){
+    @ExceptionHandler({
+            TripNotFoundException.class,
+            ParticipantNotFoundException.class
+    })
+    public ProblemDetail handleEntityNotFound(Exception ex){
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-        problemDetail.setTitle("Recurso não encontrada");
+        problemDetail.setTitle("Entidade não encontrada");
         problemDetail.setProperty("message", ex.getMessage());
 
         return problemDetail;

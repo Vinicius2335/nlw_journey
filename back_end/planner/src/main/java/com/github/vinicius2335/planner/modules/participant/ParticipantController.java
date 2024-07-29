@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @CrossOrigin(maxAge = 3600, origins = "*")
@@ -14,31 +13,27 @@ import java.util.UUID;
 @RequestMapping("/participants")
 @RestController
 public class ParticipantController {
-    private final ParticipantRepository participantRepository;
+    private final ParticitantService particitantService;
 
     /**
      * Endpoint responsável por confirmar o participante para a viagem
      * @param participantId identificador do participante
      * @param request Object que representa o nome do participante à ser confirmado
      * @return {@code Participant} confirmado
+     * @throws ParticipantNotFoundException quando participante não for encontrado pelo {@code participantId}
      */
     @PatchMapping("/{participantId}/confirm")
     public ResponseEntity<Participant> confirmParticipant(
             @PathVariable UUID participantId,
             @RequestBody @Valid ParticipantNameRequest request
-    ){
-        Optional<Participant> optParticipant = participantRepository.findById(participantId);
+    ) throws ParticipantNotFoundException {
+        Participant participant = particitantService.getParticipantById(participantId);
 
-        if (optParticipant.isPresent()){
-            Participant participant = optParticipant.get();
-            participant.setConfirmed(true);
-            participant.setName(request.name());
+        participant.setConfirmed(true);
+        participant.setName(request.name());
 
-            participantRepository.save(participant);
+        particitantService.saveParticipant(participant);
 
-            return ResponseEntity.ok(participant);
-        }
-
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(participant);
     }
 }

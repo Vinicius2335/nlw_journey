@@ -12,6 +12,6 @@
   
 - [] Testes (Repository, Service, Controller)
 
-- [] Spring Email
+- [x] Spring Email
 
 - [x] Extração do core das trips para dentro de uma classe Service
