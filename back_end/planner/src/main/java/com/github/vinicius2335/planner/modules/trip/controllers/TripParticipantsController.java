@@ -1,5 +1,6 @@
 package com.github.vinicius2335.planner.modules.trip.controllers;
 
+import com.github.vinicius2335.planner.modules.email.EmailServiceException;
 import com.github.vinicius2335.planner.modules.participant.ParticitantService;
 import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantDetailsDTO;
 import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantEmailRequest;
@@ -32,12 +33,13 @@ public class TripParticipantsController {
      * @param request objeto que apresenta o email necessário para convidar um participante
      * @return {@code ParticipantCreateResponse} objeto que representa o id do participante convidado
      * @throws TripNotFoundException quando viagem nao for encontrado pelo {@code tripId}
+     * @throws EmailServiceException quando ocorrer algum erro durante o envio de email
      */
     @PostMapping("/{tripId}/invite")
     public ResponseEntity<ParticipantIdResponse> inviteParticipant(
             @PathVariable UUID tripId,
             @RequestBody @Valid ParticipantEmailRequest request
-    ) throws TripNotFoundException {
+    ) throws TripNotFoundException, EmailServiceException {
         Trip trip = tripService.findTripById(tripId);
 
         ParticipantIdResponse response = particitantService.registerParticipantToTrip(

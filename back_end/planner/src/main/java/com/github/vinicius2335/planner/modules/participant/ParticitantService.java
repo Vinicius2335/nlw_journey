@@ -1,10 +1,13 @@
 package com.github.vinicius2335.planner.modules.participant;
 
+import com.github.vinicius2335.planner.modules.email.EmailService;
+import com.github.vinicius2335.planner.modules.email.EmailServiceException;
 import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantDetailsDTO;
 import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantIdResponse;
 import com.github.vinicius2335.planner.modules.trip.Trip;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +15,10 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
+@Log4j2
 public class ParticitantService {
     private final ParticipantRepository participantRepository;
+    private final EmailService emailService;
 
     /**
      * Registra uma lista de participantes numa viagem
@@ -37,17 +42,18 @@ public class ParticitantService {
      * @param email do participante
      * @param trip viagem onde o participante será registrado
      * @return {@code ParticipantIdResponse} objeto que representa o id do participante registrado
+     * @throws EmailServiceException quando ocorrer algum erro durante o envio de email
      */
     @Transactional
     public ParticipantIdResponse registerParticipantToTrip(
             String email,
             Trip trip
-    ) {
+    ) throws EmailServiceException {
         Participant participant = new Participant(email, trip);
         participantRepository.save(participant);
 
         if (trip.isConfirmed()) {
-            triggerConfirmationEmailToParticipant(email);
+            triggerConfirmationEmailToParticipant(email, trip);
         }
 
         return new ParticipantIdResponse(participant.getId());
@@ -55,18 +61,30 @@ public class ParticitantService {
 
     /**
      * Envia um email de confirmação da viagem para uma lista de participantes
-     * @param tripId identificador da viagem
+     * @param trip viagem
      */
-    public void triggerConfirmationEmailToParticipants(UUID tripId) {
-        // NOTE = nada por enquanto
+    public void triggerConfirmationEmailToParticipants(Trip trip) {
+        List<Participant> participants = participantRepository.findByTripId(trip.getId());
+
+        participants.forEach(participant -> {
+            try {
+                triggerConfirmationEmailToParticipant(participant.getEmail(), trip);
+            } catch (EmailServiceException e) {
+                log.error("Erro ao tentar enviar o email de confirmação para a lista de convidados da viagem: {}", e.getMessage());
+            }
+        });
+
     }
 
     /**
      * Envia um email de confirmação da viagem para um participante específico
+     *
      * @param email do participante
+     * @param trip viagem
+     * @throws EmailServiceException quando ocorrer algum erro durante o envio de email
      */
-    public void triggerConfirmationEmailToParticipant(String email) {
-        // NOTE - nada por enquanto
+    public void triggerConfirmationEmailToParticipant(String email, Trip trip) throws EmailServiceException {
+        emailService.send(email, trip);
     }
 
     /**

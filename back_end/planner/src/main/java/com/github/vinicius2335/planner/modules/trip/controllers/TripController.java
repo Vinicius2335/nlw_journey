@@ -88,7 +88,7 @@ public class TripController {
     ) throws TripNotFoundException {
         Trip trip = tripService.confirmTrip(tripId);
 
-        particitantService.triggerConfirmationEmailToParticipants(trip.getId());
+        particitantService.triggerConfirmationEmailToParticipants(trip);
 
         return ResponseEntity.ok(trip);
     }

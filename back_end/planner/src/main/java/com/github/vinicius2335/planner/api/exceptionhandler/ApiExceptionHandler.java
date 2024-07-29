@@ -1,6 +1,7 @@
 package com.github.vinicius2335.planner.api.exceptionhandler;
 
 import com.github.vinicius2335.planner.modules.activity.ActivityOccursAtInvalidException;
+import com.github.vinicius2335.planner.modules.email.EmailServiceException;
 import com.github.vinicius2335.planner.modules.trip.exceptions.TripNotFoundException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.*;
@@ -47,6 +48,21 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return super.handleExceptionInternal(ex, problemDetail, headers, status, request);
     }
 
+    @Override
+    protected ResponseEntity<Object> handleNoResourceFoundException(
+            NoResourceFoundException ex,
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode status,
+            @NonNull WebRequest request
+    ) {
+
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setTitle("Endpoint não encontrado");
+        problemDetail.setProperty("message", ex.getMessage());
+
+        return super.handleExceptionInternal(ex, problemDetail, headers, status, request);
+    }
+
     @ExceptionHandler(TripNotFoundException.class)
     public ProblemDetail handleTripNotFound(TripNotFoundException ex){
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
@@ -80,18 +96,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return problemDetail;
     }
 
-    @Override
-    protected ResponseEntity<Object> handleNoResourceFoundException(
-            NoResourceFoundException ex,
-            @NonNull HttpHeaders headers,
-            @NonNull HttpStatusCode status,
-            @NonNull WebRequest request
+    @ExceptionHandler(EmailServiceException.class)
+    public ProblemDetail handleEmailService(
+            EmailServiceException ex
     ) {
-
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        problemDetail.setTitle("Endpoint não encontrado");
+        problemDetail.setTitle("Envio de email");
         problemDetail.setProperty("message", ex.getMessage());
 
-        return super.handleExceptionInternal(ex, problemDetail, headers, status, request);
+        return problemDetail;
     }
+
 }

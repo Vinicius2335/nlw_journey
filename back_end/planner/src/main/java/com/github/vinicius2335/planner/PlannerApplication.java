@@ -45,7 +45,7 @@ public class PlannerApplication {
 					.ownerEmail(faker.internet().emailAddress())
 					.startsAt(LocalDateTime.now())
 					.endsAt(LocalDateTime.now().plusDays(10))
-					.isConfirmed(false)
+					.isConfirmed(true)
 					.build();
 
 			Trip tripSaved = tripRepository.save(trip);
