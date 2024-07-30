@@ -14,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -30,6 +31,7 @@ public class PlannerApplication {
 
 	// Preenche o banco automaticamente para testes
     @Bean
+	@Profile("prod")
     CommandLineRunner seedDatabase(
             TripRepository tripRepository,
             ParticipantRepository participantRepository,

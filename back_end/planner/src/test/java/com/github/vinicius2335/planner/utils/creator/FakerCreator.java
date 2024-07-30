@@ -1,4 +1,4 @@
-package com.github.vinicius2335.planner.utils;
+package com.github.vinicius2335.planner.utils.creator;
 
 import com.github.javafaker.Faker;
 

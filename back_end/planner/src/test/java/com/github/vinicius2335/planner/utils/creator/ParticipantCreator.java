@@ -4,7 +4,7 @@ import com.github.vinicius2335.planner.modules.participant.Participant;
 import com.github.vinicius2335.planner.modules.trip.Trip;
 import lombok.experimental.UtilityClass;
 
-import static com.github.vinicius2335.planner.utils.FakerCreator.FAKER;
+import static com.github.vinicius2335.planner.utils.creator.FakerCreator.FAKER;
 
 @UtilityClass
 public final class ParticipantCreator {
