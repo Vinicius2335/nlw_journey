@@ -52,6 +52,12 @@ public class TripService {
         return tripRepository.save(trip);
     }
 
+    /**
+     * Confirma a viagem
+     * @param tripId identificador da viagem
+     * @return {@code Trip} atualizado
+     * @throws TripNotFoundException quando à viagem não for encontrado pelo {@code tripId}
+     */
     public Trip confirmTrip(UUID tripId) throws TripNotFoundException {
         Trip trip = findTripById(tripId);
 
