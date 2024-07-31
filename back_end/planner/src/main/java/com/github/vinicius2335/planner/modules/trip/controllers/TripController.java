@@ -1,6 +1,7 @@
 package com.github.vinicius2335.planner.modules.trip.controllers;
 
 import com.github.vinicius2335.planner.core.annotations.TripEndsAtConstraint;
+import com.github.vinicius2335.planner.modules.email.EmailServiceException;
 import com.github.vinicius2335.planner.modules.participant.ParticitantService;
 import com.github.vinicius2335.planner.modules.trip.Trip;
 import com.github.vinicius2335.planner.modules.trip.TripService;
@@ -80,12 +81,13 @@ public class TripController {
      * @param tripId identificador da viagem
      * @return {@code Trip} - Viagem criada
      * @throws TripNotFoundException quando viagem nao for encontrado pelo {@code tripId}
+     * @throws EmailServiceException quando ocorrer algum erro durante o envio de email
      */
     @Transactional
     @GetMapping("/{tripId}/confirm")
     public ResponseEntity<Trip> confirmTrip(
             @PathVariable UUID tripId
-    ) throws TripNotFoundException {
+    ) throws TripNotFoundException, EmailServiceException {
         Trip trip = tripService.confirmTrip(tripId);
 
         particitantService.triggerConfirmationEmailToParticipants(trip);

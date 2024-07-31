@@ -5,6 +5,8 @@ import com.github.vinicius2335.planner.modules.email.EmailServiceException;
 import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantDetailsDTO;
 import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantIdResponse;
 import com.github.vinicius2335.planner.modules.trip.Trip;
+import com.github.vinicius2335.planner.modules.trip.TripService;
+import com.github.vinicius2335.planner.modules.trip.exceptions.TripNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class ParticitantService {
     private final ParticipantRepository participantRepository;
     private final EmailService emailService;
+    private final TripService tripService;
 
     /**
      * Registra uma lista de participantes numa viagem
@@ -62,17 +65,14 @@ public class ParticitantService {
     /**
      * Envia um email de confirmação da viagem para uma lista de participantes
      * @param trip viagem
+     * @throws EmailServiceException quando ocorrer algum erro durante o envio de email
      */
-    public void triggerConfirmationEmailToParticipants(Trip trip) {
+    public void triggerConfirmationEmailToParticipants(Trip trip) throws EmailServiceException {
         List<Participant> participants = participantRepository.findByTripId(trip.getId());
 
-        participants.forEach(participant -> {
-            try {
-                triggerConfirmationEmailToParticipant(participant.getEmail(), trip);
-            } catch (EmailServiceException e) {
-                log.error("Erro ao tentar enviar o email de confirmação para a lista de convidados da viagem: {}", e.getMessage());
-            }
-        });
+        for (Participant participant : participants){
+            triggerConfirmationEmailToParticipant(participant.getEmail(), trip);
+        }
 
     }
 
@@ -91,8 +91,11 @@ public class ParticitantService {
      * Retorna todos os participantes que foram convidados para uma viagem
      * @param tripId identificador da viagem
      * @return {@code ParticipantDetailsDTO} objeto que representa a lista de participantes encontrado pelo id da viagem
+     * @throws TripNotFoundException quando viagem não for encontrado pelo {@code tripId}
      */
-    public List<ParticipantDetailsDTO> getAllParticipantsByTripId(UUID tripId){
+    public List<ParticipantDetailsDTO> getAllParticipantsByTripId(UUID tripId) throws TripNotFoundException {
+        tripService.findTripById(tripId);
+
         return participantRepository.findByTripId(tripId)
                 .stream()
                 .map(participant -> new ParticipantDetailsDTO(
