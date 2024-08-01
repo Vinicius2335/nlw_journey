@@ -40,7 +40,7 @@ public class TripParticipantsController {
             @PathVariable UUID tripId,
             @RequestBody @Valid ParticipantEmailRequest request
     ) throws TripNotFoundException, EmailServiceException {
-        Trip trip = tripService.findTripById(tripId);
+        Trip trip = tripService.findById(tripId);
 
         ParticipantIdResponse response = particitantService.registerParticipantToTrip(
                 request.email(),
@@ -63,7 +63,7 @@ public class TripParticipantsController {
     public ResponseEntity<ParticipantListResponse> getAllParticipants(
             @PathVariable UUID tripId
     ) throws TripNotFoundException {
-        tripService.findTripById(tripId);
+        tripService.findById(tripId);
 
         List<ParticipantDetailsDTO> participants = particitantService.getAllParticipantsByTripId(tripId);
 

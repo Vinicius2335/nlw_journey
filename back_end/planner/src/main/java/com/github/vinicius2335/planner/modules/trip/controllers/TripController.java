@@ -55,7 +55,7 @@ public class TripController {
      */
     @GetMapping("/{tripId}")
     public ResponseEntity<Trip> getTripDetails(@PathVariable UUID tripId) throws TripNotFoundException {
-        return ResponseEntity.ok(tripService.findTripById(tripId));
+        return ResponseEntity.ok(tripService.findById(tripId));
     }
 
     /**

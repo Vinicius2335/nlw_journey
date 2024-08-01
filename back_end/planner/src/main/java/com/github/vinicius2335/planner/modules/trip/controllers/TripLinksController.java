@@ -34,7 +34,7 @@ public class TripLinksController {
             @PathVariable UUID tripId,
             @RequestBody @Valid LinkCreateRequest request
     ) throws TripNotFoundException {
-        Trip trip = tripService.findTripById(tripId);
+        Trip trip = tripService.findById(tripId);
         LinkIdResponse response = linkService.registerLink(request, trip);
 
         return ResponseEntity
@@ -51,7 +51,7 @@ public class TripLinksController {
     public ResponseEntity<LinkListResponse> getAllLinks(
             @PathVariable UUID tripId
     ) throws TripNotFoundException {
-        Trip trip = tripService.findTripById(tripId);
+        Trip trip = tripService.findById(tripId);
         LinkListResponse response = linkService.getAllLinksByTripId(trip.getId());
 
         return ResponseEntity.ok(response);

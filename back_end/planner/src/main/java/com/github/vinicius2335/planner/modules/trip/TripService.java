@@ -29,7 +29,7 @@ public class TripService {
      * @return {@code Trip} - viagem encontrada
      * @throws TripNotFoundException quando viagem nao for encontrado pelo {@code tripId}
      */
-    public Trip findTripById(UUID tripId) throws TripNotFoundException {
+    public Trip findById(UUID tripId) throws TripNotFoundException {
         return tripRepository.findById(tripId)
                 .orElseThrow(
                         () -> new TripNotFoundException("Não foi encontrada nenhuma viagem com o ID: " + tripId)
@@ -45,7 +45,7 @@ public class TripService {
      */
     public Trip updateTrip(UUID tripId, TripCreateRequest request)
             throws TripNotFoundException {
-        Trip trip = findTripById(tripId);
+        Trip trip = findById(tripId);
 
         trip.updateTrip(request);
 
@@ -59,7 +59,7 @@ public class TripService {
      * @throws TripNotFoundException quando à viagem não for encontrado pelo {@code tripId}
      */
     public Trip confirmTrip(UUID tripId) throws TripNotFoundException {
-        Trip trip = findTripById(tripId);
+        Trip trip = findById(tripId);
 
         trip.setConfirmed(true);
         return tripRepository.save(trip);

@@ -67,9 +67,9 @@ class TripServiceTest {
 
     @Test
     @DisplayName("Procura e retorna uma viagem pelo id")
-    void findTripById_returnTripFound_whenSuccessfully() throws TripNotFoundException {
+    void findTripById_returnFound_whenSuccessfully() throws TripNotFoundException {
         // when
-        Trip actual = underTest.findTripById(trip.getId());
+        Trip actual = underTest.findById(trip.getId());
         // then
         verify(mockTripRepository, times(1)).findById(trip.getId());
 
@@ -81,12 +81,12 @@ class TripServiceTest {
 
     @Test
     @DisplayName("Procura uma viagem pelo id, lança uma excpetion quando id não for encontrado")
-    void findTripById_throwsTripNotFoundException_whenTripNotFoundById() {
+    void findTripById_throwsTripNotFoundException_whenNotFoundById() {
         // config
         when(mockTripRepository.findById(any(UUID.class)))
                 .thenReturn(Optional.empty());
         // when
-        assertThatThrownBy(() -> underTest.findTripById(trip.getId()))
+        assertThatThrownBy(() -> underTest.findById(trip.getId()))
                 .isInstanceOf(TripNotFoundException.class)
                 .hasMessageContaining(NOT_FOUND_MESSAGE);
         // then

@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @CrossOrigin(maxAge = 3600, origins = "*")
@@ -37,7 +36,7 @@ public class TripActivitiesController {
             @PathVariable UUID tripId,
             @RequestBody @Valid ActivityCreateRequest request
     ) throws TripNotFoundException, ActivityOccursAtInvalidException {
-        Trip trip = tripService.findTripById(tripId);
+        Trip trip = tripService.findById(tripId);
 
         ActivityIdResponse response = activityService.registerActivity(request, trip);
 
@@ -55,7 +54,7 @@ public class TripActivitiesController {
     public ResponseEntity<ActivityListResponse> getAllActivities(
             @PathVariable UUID tripId
     ) throws TripNotFoundException {
-        Trip trip = tripService.findTripById(tripId);
+        Trip trip = tripService.findById(tripId);
         ActivityListResponse response = activityService.getAllActivitiesByTripId(trip.getId());
 
         return ResponseEntity

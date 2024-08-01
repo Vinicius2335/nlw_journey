@@ -5,8 +5,6 @@ import com.github.vinicius2335.planner.modules.email.EmailServiceException;
 import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantDetailsDTO;
 import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantIdResponse;
 import com.github.vinicius2335.planner.modules.trip.Trip;
-import com.github.vinicius2335.planner.modules.trip.TripService;
-import com.github.vinicius2335.planner.modules.trip.exceptions.TripNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -21,7 +19,6 @@ import java.util.UUID;
 public class ParticitantService {
     private final ParticipantRepository participantRepository;
     private final EmailService emailService;
-    private final TripService tripService;
 
     /**
      * Registra uma lista de participantes numa viagem
@@ -91,11 +88,8 @@ public class ParticitantService {
      * Retorna todos os participantes que foram convidados para uma viagem
      * @param tripId identificador da viagem
      * @return {@code ParticipantDetailsDTO} objeto que representa a lista de participantes encontrado pelo id da viagem
-     * @throws TripNotFoundException quando viagem não for encontrado pelo {@code tripId}
      */
-    public List<ParticipantDetailsDTO> getAllParticipantsByTripId(UUID tripId) throws TripNotFoundException {
-        tripService.findTripById(tripId);
-
+    public List<ParticipantDetailsDTO> getAllParticipantsByTripId(UUID tripId) {
         return participantRepository.findByTripId(tripId)
                 .stream()
                 .map(participant -> new ParticipantDetailsDTO(
