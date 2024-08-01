@@ -20,4 +20,15 @@ class RandomTest {
         })
                 .doesNotThrowAnyException();
     }
+
+    @Test
+    void LocalDateTime_toString(){
+        assertThatCode(() -> {
+            LocalDateTime now = LocalDateTime.now();
+            String nowString = now.toString();
+
+            System.out.println(nowString);
+        })
+                .doesNotThrowAnyException();
+    }
 }
