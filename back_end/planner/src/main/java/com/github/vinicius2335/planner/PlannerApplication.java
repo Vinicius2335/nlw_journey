@@ -31,7 +31,7 @@ public class PlannerApplication {
 
 	// Preenche o banco automaticamente para testes
     @Bean
-	@Profile("prod")
+	@Profile("dev")
     CommandLineRunner seedDatabase(
             TripRepository tripRepository,
             ParticipantRepository participantRepository,

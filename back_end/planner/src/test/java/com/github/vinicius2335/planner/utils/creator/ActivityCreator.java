@@ -22,15 +22,18 @@ public final class ActivityCreator {
                 .build();
     }
 
-    public static ActivityCreateRequest mockActivityCreateRequest(String title, String occursAt){
+    public static ActivityCreateRequest mockActivityCreateRequest(
+            String title,
+            String occursAt
+    ){
         return new ActivityCreateRequest(
                 title,
                 occursAt
         );
     }
 
-    public static ActivityIdResponse mockActivityIdResponse(UUID activityId){
-        return new ActivityIdResponse(activityId);
+    public static ActivityCreateRequest mockInvalidActivityCreateRequest(){
+        return new ActivityCreateRequest(null, null);
     }
 
     private static ActivitiesDTO moackActivitiesDTO(Activity activity){

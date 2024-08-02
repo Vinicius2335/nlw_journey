@@ -26,6 +26,10 @@ public final class LinkCreator {
         return new LinkCreateRequest(title, url);
     }
 
+    public static LinkCreateRequest mockInvalidLinkCreateRequest(){
+        return new LinkCreateRequest(null, null);
+    }
+
     public static LinkIdResponse mockLinkIdResponse(UUID linkId){
         return new LinkIdResponse(linkId);
     }

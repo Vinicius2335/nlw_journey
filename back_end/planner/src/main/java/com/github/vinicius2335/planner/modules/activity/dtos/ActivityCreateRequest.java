@@ -1,5 +1,6 @@
 package com.github.vinicius2335.planner.modules.activity.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 
 public record ActivityCreateRequest(
@@ -7,6 +8,7 @@ public record ActivityCreateRequest(
         String title,
 
         @NotBlank(message = "Activity Ocurrs At: cannot be null or empty")
+        @JsonProperty("occurs_at")
         String occursAt
 ) {
 }
