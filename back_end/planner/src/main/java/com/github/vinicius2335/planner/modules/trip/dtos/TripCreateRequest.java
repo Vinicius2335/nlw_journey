@@ -1,5 +1,6 @@
 package com.github.vinicius2335.planner.modules.trip.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.vinicius2335.planner.core.annotations.TripEndsAtConstraint;
 import com.github.vinicius2335.planner.core.annotations.TripStartsAtConstraint;
 import jakarta.validation.constraints.Email;
@@ -15,18 +16,23 @@ public record TripCreateRequest(
         String destination,
 
         @TripStartsAtConstraint
+        @JsonProperty("starts_at")
         String startsAt,
 
         @NotBlank(message = "Trip Ends At: cannot be null or empty")
+        @JsonProperty("ends_at")
         String endsAt,
 
         @Size(min = 1, message = "Trip Emails To Invite: must have at least 1 registered email")
+        @JsonProperty("emails_to_invite")
         List<@Email String> emailsToInvite,
 
         @NotBlank(message = "Trip Owner Name: cannot be null or empty")
+        @JsonProperty("owner_name")
         String ownerName,
 
         @NotBlank(message = "Trip Owner Email: cannot be null or empty")
+        @JsonProperty("owner_email")
         String ownerEmail
 ) {
 }
