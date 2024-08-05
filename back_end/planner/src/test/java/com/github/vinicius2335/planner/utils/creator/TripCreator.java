@@ -6,6 +6,7 @@ import lombok.experimental.UtilityClass;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.github.vinicius2335.planner.utils.creator.FakerCreator.FAKER;
@@ -38,11 +39,33 @@ public final class TripCreator {
     public static TripCreateRequest mockTripCreateRequest(){
         return new TripCreateRequest(
                 FAKER.address().city(),
-                LocalDateTime.now().toString(),
+                LocalDateTime.now().plusHours(1).toString(),
                 LocalDateTime.now().plusDays(10).toString(),
                 createEmailsToInviteList(),
                 FAKER.name().fullName(),
                 FAKER.internet().emailAddress()
+        );
+    }
+
+    public static TripCreateRequest mockUpdateTripCreateRequest(){
+        return new TripCreateRequest(
+                "Teste",
+                LocalDateTime.now().plusHours(1).toString(),
+                LocalDateTime.now().plusDays(10).toString(),
+                createEmailsToInviteList(),
+                FAKER.name().fullName(),
+                FAKER.internet().emailAddress()
+        );
+    }
+
+    public static TripCreateRequest mockInvalidTripCreateRequest(){
+        return new TripCreateRequest(
+                "ab",
+                null,
+                null,
+                Collections.emptyList(),
+                null,
+                "teste"
         );
     }
 

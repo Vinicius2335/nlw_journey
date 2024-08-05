@@ -4,7 +4,6 @@ import com.github.vinicius2335.planner.modules.link.Link;
 import com.github.vinicius2335.planner.modules.link.dtos.LinkCreateRequest;
 import com.github.vinicius2335.planner.modules.trip.Trip;
 import com.github.vinicius2335.planner.utils.creator.LinkCreator;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +16,7 @@ import java.util.UUID;
 import static io.restassured.RestAssured.given;
 
 @DisplayName("Teste de Integração para TripLinksController")
-class TripLinksControllerTest extends BaseIT {
+class TripLinksControllerIT extends BaseIT {
 
     @BeforeEach
     void setUp() {

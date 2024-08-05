@@ -13,13 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 
 @DisplayName("Teste de Integração para TripActivitiesController")
-class TripActivitiesControllerTest extends BaseIT{
+class TripActivitiesControllerIT extends BaseIT{
 
     @Value("${mensagem.test}")
     private String teste;
