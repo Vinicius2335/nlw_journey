@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = TripStartsAtConstraintValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TripStartsAtConstraint {
-    String message() default "Trip Starts At: cannot be a past date";
+    String message() default "Trip Starts_At: cannot be a past date, empty or null";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

@@ -10,11 +10,15 @@ public class TripStartsAtConstraintValidator implements ConstraintValidator<Trip
     @Override
     public boolean isValid(String startsAt, ConstraintValidatorContext context) {
 
-        LocalDateTime startsAtDate = LocalDateTime.parse(startsAt, DateTimeFormatter.ISO_DATE_TIME);
-        LocalDateTime now = LocalDateTime.now();
+        try {
+            LocalDateTime startsAtDate = LocalDateTime.parse(startsAt, DateTimeFormatter.ISO_DATE_TIME);
+            LocalDateTime now = LocalDateTime.now();
 
-        // Quer dizer que:
-        // startsAt para ser válido, não pode ser uma data anterior a data de criação da viagem
-        return !startsAtDate.isBefore(now);
+            // Quer dizer que:
+            // startsAt para ser válido, não pode ser uma data anterior a data de criação da viagem
+            return !startsAtDate.isBefore(now);
+        } catch (NullPointerException ex){
+            return false;
+        }
     }
 }

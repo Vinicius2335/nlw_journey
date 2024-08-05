@@ -19,7 +19,6 @@ public record TripCreateRequest(
         @JsonProperty("starts_at")
         String startsAt,
 
-        @NotBlank(message = "Trip Ends At: cannot be null or empty")
         @JsonProperty("ends_at")
         String endsAt,
 
