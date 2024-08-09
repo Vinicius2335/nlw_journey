@@ -1,5 +1,6 @@
 package com.github.vinicius2335.planner.modules.trip.controllers;
 
+import com.github.vinicius2335.planner.api.openapi.TripActivitiesControllerOpenApi;
 import com.github.vinicius2335.planner.modules.activity.ActivityOccursAtInvalidException;
 import com.github.vinicius2335.planner.modules.activity.ActivityService;
 import com.github.vinicius2335.planner.modules.activity.dtos.ActivityCreateRequest;
@@ -19,7 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/trips")
 @RestController
-public class TripActivitiesController {
+public class TripActivitiesController implements TripActivitiesControllerOpenApi {
     private final ActivityService activityService;
     private final TripService tripService;
 

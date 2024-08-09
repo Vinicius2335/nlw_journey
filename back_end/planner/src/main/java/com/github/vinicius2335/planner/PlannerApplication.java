@@ -40,6 +40,8 @@ public class PlannerApplication {
     ) {
         Faker faker = new Faker(new Locale("pt-BR"));
 
+		log.info("Docs: http://localhost:8080/docs");
+
 		return args -> {
 			Trip trip = Trip.builder()
 					.destination(faker.address().city())

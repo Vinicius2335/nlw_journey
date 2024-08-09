@@ -1,5 +1,6 @@
 package com.github.vinicius2335.planner.modules.trip.controllers;
 
+import com.github.vinicius2335.planner.api.openapi.TripLinksControllerOpenApi;
 import com.github.vinicius2335.planner.modules.link.LinkService;
 import com.github.vinicius2335.planner.modules.link.dtos.LinkCreateRequest;
 import com.github.vinicius2335.planner.modules.link.dtos.LinkIdResponse;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/trips")
 @RestController
-public class TripLinksController {
+public class TripLinksController implements TripLinksControllerOpenApi {
     private final LinkService linkService;
     private final TripService tripService;
 

@@ -1,5 +1,6 @@
 package com.github.vinicius2335.planner.modules.participant;
 
+import com.github.vinicius2335.planner.api.openapi.ParticipantControllerOpenApi;
 import com.github.vinicius2335.planner.modules.participant.dtos.ParticipantNameRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/participants")
 @RestController
-public class ParticipantController {
+public class ParticipantController implements ParticipantControllerOpenApi {
     private final ParticitantService particitantService;
 
     /**

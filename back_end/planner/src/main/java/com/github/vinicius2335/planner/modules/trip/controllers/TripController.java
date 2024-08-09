@@ -1,5 +1,6 @@
 package com.github.vinicius2335.planner.modules.trip.controllers;
 
+import com.github.vinicius2335.planner.api.openapi.TripControllerOpenApi;
 import com.github.vinicius2335.planner.core.annotations.TripEndsAtConstraint;
 import com.github.vinicius2335.planner.modules.email.EmailServiceException;
 import com.github.vinicius2335.planner.modules.participant.ParticitantService;
@@ -23,7 +24,7 @@ import java.util.UUID;
 @RequestMapping("/trips")
 @RestController
 @Validated
-public class TripController {
+public class TripController implements TripControllerOpenApi {
     private final ParticitantService particitantService;
     private final TripService tripService;
 
