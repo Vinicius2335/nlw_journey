@@ -35,12 +35,10 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
   - h2 -> database
   - Faker -> seed database
   - Flyway
-  - Em Breve
-    - [] Spring Doc -> Swagger
-    - [] Rest Assured -> testes
-    - [] Spring Mail
-    - [] mailpit
-    - [] Testcontainers 
+  - Spring Doc -> Swagger
+  - Rest Assured -> testes
+  - Spring Mail
+  - mailpit
 - Mobile
   - React Native
   - Typescript
@@ -80,6 +78,12 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 <p align="center">
   <img alt="ERD" src=".github/ERD_planner.png" width="400px">
+</p>
+
+## 🖼 Documentação com Swagger
+
+<p align="center">
+  <img alt="ERD" src=".github/swagger.png" width="400px">
 </p>
 
 ## 🖼 ScreenShot Web
